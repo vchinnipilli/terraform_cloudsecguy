@@ -10,11 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-
-- script: |
-    pip3 install checkov
-  displayName: 'Checkov Scan'
-
   
 - script: |
     docker run --rm -v "$(pwd):/src" liamg/tfsec /src
@@ -24,3 +19,9 @@ steps:
 - script: |
     pip3 install -Iv terrascan==0.2.3
   displayName: 'Terrascan'
+
+
+- script: |
+    pip3 install --upgrade setuptools
+    pip3 install checkov
+  displayName: 'Checkov Scan'
