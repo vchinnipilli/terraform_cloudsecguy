@@ -11,11 +11,19 @@ pool:
 
 steps:
 - script: |
-    pip3 install -Iv terrascan==0.2.3
+    echo "Initiating Terrascan"
+    docker run -v "$(pwd):/src" accurics/terrascan -l /src
+    echo "Scan Executed Successfully"
   displayName: 'Terrascan'
 
-
 - script: |
-    pip3 install --upgrade setuptools
-    pip3 install checkov
+    echo "Initiating Checkov Scan"
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src
+    echo "Scan Executed Successfully"
   displayName: 'Checkov Scan'
+  
+- script: |
+    echo "Initiating tfsec Scan"
+    docker run --rm -v "$(pwd):/src" liamg/tfsec /src
+    echo "Scan Executed Successfully"
+  displayName: 'tfsec Scan'
