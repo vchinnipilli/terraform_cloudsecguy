@@ -18,7 +18,7 @@ steps:
   displayName: 'Terrascan'
 
 - script: |
-    pip install checkov
+    pip3 install checkov
   displayName: 'Checkov Scan'
 
 - script: |
