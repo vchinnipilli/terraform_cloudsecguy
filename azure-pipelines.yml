@@ -17,15 +17,14 @@ steps:
   displayName: 'Checkov Scan'
 
 - script: |
-    pip install terrascan
+    pip3 install terrascan
   displayName: 'Terrascan'
   
 - script: |
-    go get -u github.com/liamg/tfsec/cmd/tfsec
+    pwd
+    ls
+    cd
+    docker run --rm -it -v "$(pwd):/src" liamg/tfsec /src
   displayName: 'tfsec scan'
 
-- script: |
-    tfsec --help
-    terrascan --help
-    checkov --help
-  displayName: 'Testing Scanners'
+
