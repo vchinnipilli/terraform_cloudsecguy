@@ -12,18 +12,14 @@ pool:
 steps:
 
 - script: |
-    pip3 install --upgrade setuptools
     pip3 install checkov
   displayName: 'Checkov Scan'
 
 - script: |
-    pip3 install terrascan
+    pip install -Iv terrascan==0.1.0
   displayName: 'Terrascan'
   
 - script: |
-    pwd
-    ls
-    cd
     docker run --rm -v "$(pwd):/src" liamg/tfsec /src
   displayName: 'tfsec scan'
 
