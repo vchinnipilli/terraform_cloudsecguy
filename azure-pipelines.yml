@@ -12,7 +12,7 @@ pool:
 steps:
 
 - script: |
-    pip3 install --upgrade pip && pip3 install --upgrade setuptools
+    pip3 install --upgrade setuptools
     pip3 install checkov
   displayName: 'Checkov Scan'
 
@@ -24,7 +24,7 @@ steps:
     pwd
     ls
     cd
-    docker run --rm -it -v "$(pwd):/src" liamg/tfsec /src
+    docker run --rm -v "$(pwd):/src" liamg/tfsec /src
   displayName: 'tfsec scan'
 
 
