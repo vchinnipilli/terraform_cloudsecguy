@@ -15,12 +15,12 @@ steps:
     pip3 install checkov
   displayName: 'Checkov Scan'
 
-- script: |
-    pip install -Iv terrascan==0.1.0
-  displayName: 'Terrascan'
   
 - script: |
     docker run --rm -v "$(pwd):/src" liamg/tfsec /src
   displayName: 'tfsec scan'
 
 
+- script: |
+    pip3 install -Iv terrascan==0.2.3
+  displayName: 'Terrascan'
