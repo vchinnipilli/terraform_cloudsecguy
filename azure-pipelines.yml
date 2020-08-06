@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- script: |
+    which pip
+    which python
+    pip install terrascan
+  displayName: 'Terrascan'
+
+- script: |
+    pip install checkov
+  displayName: 'Checkov Scan'
+
+- script: |
+    go get -u github.com/liamg/tfsec/cmd/tfsec
+  displayName: 'tfsec scan'
+
+- script: |
+    tfsec --help
+    terrascan --help
+    checkov --help
+  displayName: 'Testing Scanners'
