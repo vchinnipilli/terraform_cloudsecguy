@@ -9,6 +9,14 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+- name: hook
+  value: https://hooks.slack.com/services/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 
+- name: user
+  value: azure-pipeline
+- name: channel
+  value: infrastucture-code-scanning
+
 steps:
 - script: |
     echo "Initiating Terrascan"
@@ -18,7 +26,7 @@ steps:
 
 - script: |
     echo "Initiating Checkov Scan"
-    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src | bash slack_message.sh -h ${{ variables.hook }} -c ${{ variables.channel }} -u ${{ variables.user }} -i comet -C 1974D2
     echo "Scan Executed Successfully"
   displayName: 'Checkov Scan'
   
