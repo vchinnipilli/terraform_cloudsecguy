@@ -1,0 +1,291 @@
+
+       _               _              
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V / 
+  \___|_| |_|\___|\___|_|\_\___/ \_/  
+                                      
+by bridgecrew.io | version: 1.0.475 
+
+terraform scan results:
+
+Passed checks: 7, Failed checks: 8, Skipped checks: 0
+
+Check: CKV_AWS_41: "Ensure no hard coded AWS access key and and secret key exists in provider"
+	PASSED for resource: aws.default
+	File: /main.tf:1-3
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_secrets_5
+
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+	PASSED for resource: aws_security_group.sg
+	File: /main.tf:5-33
+	Guide: https://docs.bridgecrew.io/docs/networking_2
+
+Check: CKV_AWS_23: "Ensure every security groups rule has a description"
+	PASSED for resource: aws_security_group.sg
+	File: /main.tf:5-33
+	Guide: https://docs.bridgecrew.io/docs/networking_31
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration EBS is securely encrypted"
+	PASSED for resource: aws_instance.instance
+	File: /main.tf:57-66
+	Guide: https://docs.bridgecrew.io/docs/general_13
+
+Check: CKV_AWS_46: "Ensure no hard coded AWS access key and and secret key exists in EC2 user data"
+	PASSED for resource: aws_instance.instance
+	File: /main.tf:57-66
+	Guide: https://docs.bridgecrew.io/docs/bc_aws_secrets_1
+
+Check: CKV_AWS_57: "S3 Bucket has an ACL defined which allows public WRITE access."
+	PASSED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+	Guide: https://docs.bridgecrew.io/docs/s3_2-acl-write-permissions-everyone
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+	PASSED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+	Guide: https://docs.bridgecrew.io/docs/s3_16-enable-versioning
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+	FAILED for resource: aws_security_group.sg
+	File: /main.tf:5-33
+	Guide: https://docs.bridgecrew.io/docs/networking_1-port-security
+
+		5  | resource "aws_security_group" "sg" {
+		6  |   name        = "security group"
+		7  |   description = "Give Security permissions"
+		8  |  
+		9  |   ingress {
+		10 |     description = "For SSH"
+		11 |     from_port   = 22
+		12 |     to_port     = 22
+		13 |     protocol    = "tcp"
+		14 |     cidr_blocks = ["0.0.0.0/0"]
+		15 |   }
+		16 |    
+		17 |      ingress {
+		18 |     description = "For HTTP"
+		19 |     from_port   = 80
+		20 |     to_port     = 80
+		21 |     protocol    = "tcp"
+		22 |     cidr_blocks = ["0.0.0.0/0"]
+		23 |   }
+		24 | egress {
+		25 |     from_port   = 0
+		26 |     to_port     = 0
+		27 |     protocol    = "-1"
+		28 |     cidr_blocks = ["0.0.0.0/0"]
+		29 |   }
+		30 | tags = {
+		31 |     Name = "security group"
+		32 |   }
+		33 | }
+
+
+Check: CKV_AWS_42: "Ensure EFS is securely encrypted"
+	FAILED for resource: aws_efs_file_system.EFS-task
+	File: /main.tf:None-None
+	Guide: https://docs.bridgecrew.io/docs/general_17
+
+Check: CKV_AWS_52: "Ensure S3 bucket has MFA delete enabled"
+	FAILED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+
+		99  | resource "aws_s3_bucket" "task2-cloudsecguy-bucket" {
+		100 |   bucket = "task2-cloudsecguy-bucket"
+		101 |   acl = "public-read"
+		102 |  
+		103 |   versioning {
+		104 |     enabled = true
+		105 |   }
+		106 | tags = {
+		107 |     Name = "task2-cloudsecguy-bucket"
+		108 |   }
+		109 | }
+
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+	FAILED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+	Guide: https://docs.bridgecrew.io/docs/s3_13-enable-logging
+
+		99  | resource "aws_s3_bucket" "task2-cloudsecguy-bucket" {
+		100 |   bucket = "task2-cloudsecguy-bucket"
+		101 |   acl = "public-read"
+		102 |  
+		103 |   versioning {
+		104 |     enabled = true
+		105 |   }
+		106 | tags = {
+		107 |     Name = "task2-cloudsecguy-bucket"
+		108 |   }
+		109 | }
+
+
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+	FAILED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+	Guide: https://docs.bridgecrew.io/docs/s3_14-data-encrypted-at-rest
+
+		99  | resource "aws_s3_bucket" "task2-cloudsecguy-bucket" {
+		100 |   bucket = "task2-cloudsecguy-bucket"
+		101 |   acl = "public-read"
+		102 |  
+		103 |   versioning {
+		104 |     enabled = true
+		105 |   }
+		106 | tags = {
+		107 |     Name = "task2-cloudsecguy-bucket"
+		108 |   }
+		109 | }
+
+
+Check: CKV_AWS_20: "S3 Bucket has an ACL defined which allows public READ access."
+	FAILED for resource: aws_s3_bucket.task2-cloudsecguy-bucket
+	File: /main.tf:99-109
+	Guide: https://docs.bridgecrew.io/docs/s3_1-acl-read-permissions-everyone
+
+		99  | resource "aws_s3_bucket" "task2-cloudsecguy-bucket" {
+		100 |   bucket = "task2-cloudsecguy-bucket"
+		101 |   acl = "public-read"
+		102 |  
+		103 |   versioning {
+		104 |     enabled = true
+		105 |   }
+		106 | tags = {
+		107 |     Name = "task2-cloudsecguy-bucket"
+		108 |   }
+		109 | }
+
+
+Check: CKV_AWS_34: "Ensure cloudfront distribution ViewerProtocolPolicy is set to HTTPS"
+	FAILED for resource: aws_cloudfront_distribution.task2_cf
+	File: /main.tf:123-181
+	Guide: https://docs.bridgecrew.io/docs/networking_32
+
+		123 | resource "aws_cloudfront_distribution" "task2_cf" {
+		124 |    depends_on=[aws_s3_bucket.task2-cloudsecguy-bucket]
+		125 |    origin {
+		126 |         domain_name = aws_s3_bucket.task2-cloudsecguy-bucket.bucket_regional_domain_name
+		127 |         origin_id = aws_s3_bucket.task2-cloudsecguy-bucket.id
+		128 | custom_origin_config {
+		129 |             http_port = 80
+		130 |             https_port = 80
+		131 |             origin_protocol_policy = "match-viewer"
+		132 |             origin_ssl_protocols = ["TLSv1", "TLSv1.1", "TLSv1.2"] 
+		133 |         }
+		134 |     }
+		135 |        
+		136 |     enabled = true
+		137 |      is_ipv6_enabled = true
+		138 | default_cache_behavior {
+		139 |         allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+		140 |         cached_methods = ["GET", "HEAD"]
+		141 |         target_origin_id = "${aws_s3_bucket.task2-cloudsecguy-bucket.id}"
+		142 |          forwarded_values {
+		143 |             query_string = false
+		144 |         
+		145 |             cookies {
+		146 |                forward = "none"
+		147 |             }
+		148 |         }
+		149 | viewer_protocol_policy = "allow-all"
+		150 |         min_ttl = 0
+		151 |         default_ttl = 3600
+		152 |         max_ttl = 86400
+		153 |     }
+		154 | # Restricts who is able to access this content
+		155 |     
+		156 |        restrictions {
+		157 |           geo_restriction {
+		158 |               restriction_type = "none"
+		159 |         }
+		160 |     }
+		161 | viewer_certificate {
+		162 |         cloudfront_default_certificate = true
+		163 |     }
+		164 |      
+		165 |       connection {
+		166 |              type = "ssh"
+		167 |              user = "ec2-user"
+		168 |              private_key = tls_private_key.private_key.private_key_pem
+		169 |              host = aws_instance.Task-2.public_ip
+		170 |      }
+		171 |     
+		172 |    provisioner "remote-exec" {
+		173 |     
+		174 |     inline = [
+		175 |      
+		176 |      "sudo su << EOF",
+		177 |               "echo \"<img src='http://${self.domain_name}/${aws_s3_bucket_object.task2_object.key}'>\" >> /var/www/html/index.php",
+		178 |               "EOF", 
+		179 |     ]
+		180 |    }
+		181 | }
+
+
+Check: CKV_AWS_68: "CloudFront Distribution should have WAF enabled"
+	FAILED for resource: aws_cloudfront_distribution.task2_cf
+	File: /main.tf:123-181
+
+		123 | resource "aws_cloudfront_distribution" "task2_cf" {
+		124 |    depends_on=[aws_s3_bucket.task2-cloudsecguy-bucket]
+		125 |    origin {
+		126 |         domain_name = aws_s3_bucket.task2-cloudsecguy-bucket.bucket_regional_domain_name
+		127 |         origin_id = aws_s3_bucket.task2-cloudsecguy-bucket.id
+		128 | custom_origin_config {
+		129 |             http_port = 80
+		130 |             https_port = 80
+		131 |             origin_protocol_policy = "match-viewer"
+		132 |             origin_ssl_protocols = ["TLSv1", "TLSv1.1", "TLSv1.2"] 
+		133 |         }
+		134 |     }
+		135 |        
+		136 |     enabled = true
+		137 |      is_ipv6_enabled = true
+		138 | default_cache_behavior {
+		139 |         allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+		140 |         cached_methods = ["GET", "HEAD"]
+		141 |         target_origin_id = "${aws_s3_bucket.task2-cloudsecguy-bucket.id}"
+		142 |          forwarded_values {
+		143 |             query_string = false
+		144 |         
+		145 |             cookies {
+		146 |                forward = "none"
+		147 |             }
+		148 |         }
+		149 | viewer_protocol_policy = "allow-all"
+		150 |         min_ttl = 0
+		151 |         default_ttl = 3600
+		152 |         max_ttl = 86400
+		153 |     }
+		154 | # Restricts who is able to access this content
+		155 |     
+		156 |        restrictions {
+		157 |           geo_restriction {
+		158 |               restriction_type = "none"
+		159 |         }
+		160 |     }
+		161 | viewer_certificate {
+		162 |         cloudfront_default_certificate = true
+		163 |     }
+		164 |      
+		165 |       connection {
+		166 |              type = "ssh"
+		167 |              user = "ec2-user"
+		168 |              private_key = tls_private_key.private_key.private_key_pem
+		169 |              host = aws_instance.Task-2.public_ip
+		170 |      }
+		171 |     
+		172 |    provisioner "remote-exec" {
+		173 |     
+		174 |     inline = [
+		175 |      
+		176 |      "sudo su << EOF",
+		177 |               "echo \"<img src='http://${self.domain_name}/${aws_s3_bucket_object.task2_object.key}'>\" >> /var/www/html/index.php",
+		178 |               "EOF", 
+		179 |     ]
+		180 |    }
+		181 | }
+
+
