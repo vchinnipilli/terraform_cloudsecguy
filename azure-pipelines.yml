@@ -26,7 +26,8 @@ steps:
 
 - script: |
     echo "Initiating Checkov Scan"
-    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src | bash slack_message.sh -h ${{ variables.hook }} -c ${{ variables.channel }} -u ${{ variables.user }} -i comet -C 1974D2
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src 
+    ls | bash slack_message.sh -h ${{ variables.hook }} -c ${{ variables.channel }} -u ${{ variables.user }} -i comet -C 1974D2
     echo "Scan Executed Successfully"
   displayName: 'Checkov Scan'
   
