@@ -1,4 +1,6 @@
-https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_apis/build/status/vchinnipilli.terraform_cloudsecguy?branchName=master [![Build Status](https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_apis/build/status/vchinnipilli.terraform_cloudsecguy?branchName=master)](https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_build/latest?definitionId=10&branchName=master)
+https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_apis/build/status/vchinnipilli.terraform_cloudsecguy?branchName=master 
+
+[![Build Status](https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_apis/build/status/vchinnipilli.terraform_cloudsecguy?branchName=master)](https://dev.azure.com/vasantkumarchinnipilli/FirstProject_July/_build/latest?definitionId=10&branchName=master)
 
 
 # terraform_cloudsecguy
