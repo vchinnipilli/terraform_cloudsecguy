@@ -21,8 +21,8 @@ steps:
 
 - script: |
     echo "Installing Requirements"
-    npm cache clean -f
-    npm install -g pipe-to-slack --force
+    sudo npm cache clean -f
+    sudo npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s
     echo "Slack Pipe installed" | p2s '#infrastucture-code-scanning'
     echo "Scan Executed Successfully"
