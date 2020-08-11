@@ -48,7 +48,7 @@ steps:
 
 - script: |
     echo "Initiating Cloudformation Scan"
-    cfn_nag_scan --input-path /cloudformation_scripts/
+    cfn_nag_scan --input-path cloudformation_scripts/
     echo "Scan Executed Successfully"
   displayName: 'Cloudformation Scan'
 
