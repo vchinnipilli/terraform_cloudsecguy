@@ -18,9 +18,18 @@ variables:
   value: infrastucture-code-scanning
 
 steps:
+
+- script: |
+    echo "Installing Requirements"
+    npm install -g pipe-to-slack
+    mv .p2s ~/.p2s
+    echo "Slack Pipe installed" | p2s '#infrastucture-code-scanning'
+    echo "Scan Executed Successfully"
+  displayName: 'Setting up'
+
 - script: |
     echo "Initiating Terrascan"
-    docker run -v "$(pwd):/src" accurics/terrascan -l /src | bash slack_message.sh -h ${{ variables.hook }} -c ${{ variables.channel }} -u ${{ variables.user }} -i comet -C 1974D2
+    docker run -v "$(pwd):/src" accurics/terrascan -l /src
     echo "Scan Executed Successfully"
   displayName: 'Terrascan'
 

@@ -1,0 +1,3 @@
+webHook=https://hooks.slack.com/services/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
+defaultChannel=#infrastucture-code-scanning
+username="azure Pipelines"
