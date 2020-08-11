@@ -29,18 +29,18 @@ steps:
 
 - script: |
     echo "Initiating Terrascan"
-    docker run -v "$(pwd):/src" accurics/terrascan -l /src | p2s '#infrastucture-code-scanning'
+    docker run -v "$(pwd):/src" accurics/terrascan -l /src
     echo "Scan Executed Successfully"
   displayName: 'Terrascan'
 
 - script: |
     echo "Initiating Checkov Scan"
-    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src | p2s '#infrastucture-code-scanning'
     echo "Scan Executed Successfully"
   displayName: 'Checkov Scan'
   
 - script: |
     echo "Initiating tfsec Scan"
-    docker run --rm -v "$(pwd):/src" liamg/tfsec /src
+    docker run --rm -v "$(pwd):/src" liamg/tfsec /src | p2s '#infrastucture-code-scanning'
     echo "Scan Executed Successfully"
   displayName: 'tfsec Scan'
