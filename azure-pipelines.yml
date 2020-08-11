@@ -21,7 +21,7 @@ steps:
 
 - script: |
     echo "Installing Requirements"
-    gem install cfn-nag
+    sudo gem install cfn-nag
     #sudo npm cache clean -f
     #sudo npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s 
