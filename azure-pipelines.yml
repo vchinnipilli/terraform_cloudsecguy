@@ -23,14 +23,13 @@ steps:
     echo "Installing Requirements"
     sudo npm cache clean -f
     sudo npm install -g pipe-to-slack --force
-    mv .p2s ~/.p2s
-    echo "Slack Pipe installed" | p2s '#infrastucture-code-scanning'
+    mv .p2s ~/.p2s 
     echo "Scan Executed Successfully"
   displayName: 'Setting up'
 
 - script: |
     echo "Initiating Terrascan"
-    docker run -v "$(pwd):/src" accurics/terrascan -l /src
+    docker run -v "$(pwd):/src" accurics/terrascan -l /src | p2s '#infrastucture-code-scanning'
     echo "Scan Executed Successfully"
   displayName: 'Terrascan'
 
