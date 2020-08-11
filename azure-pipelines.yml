@@ -22,7 +22,7 @@ steps:
 - script: |
     echo "Installing Requirements"
     chown -R $USER /usr/local/bin/node_modules
-    npm install -g pipe-to-slack
+    npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s
     echo "Slack Pipe installed" | p2s '#infrastucture-code-scanning'
     echo "Scan Executed Successfully"
