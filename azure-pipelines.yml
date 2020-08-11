@@ -21,7 +21,7 @@ steps:
 
 - script: |
     echo "Installing Requirements"
-    sudo apt install ruby-full -y
+    gem install cfn-nag
     #sudo npm cache clean -f
     #sudo npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s 
