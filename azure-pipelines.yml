@@ -22,33 +22,38 @@ steps:
 - script: |
     echo "Installing Requirements"
     sudo gem install cfn-nag
-    cfn_nag_rules
-    #sudo npm cache clean -f
-    #sudo npm install -g pipe-to-slack --force
+    sudo npm cache clean -f
+    sudo npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s 
     echo "Scan Executed Successfully"
   displayName: 'Setting up'
 
-#- script: |
-#    echo "Initiating Terrascan"
-#    docker run -v "$(pwd):/src" accurics/terrascan -l /src
-#    echo "Scan Executed Successfully"
-#  displayName: 'Terrascan'
-#
-#- script: |
-#    echo "Initiating Checkov Scan"
-#    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src | p2s '#infrastucture-code-scanning'
-#    echo "Scan Executed Successfully"
-#  displayName: 'Checkov Scan'
-#  
-#- script: |
-#    echo "Initiating tfsec Scan"
-#    docker run --rm -v "$(pwd):/src" liamg/tfsec /src
-#    echo "Scan Executed Successfully"
-#  displayName: 'tfsec Scan'
-#
-#- script: |
-#    echo "Initiating Cloudformation Scan"
-#    docker run -v "$(pwd):/src" -t stelligent/cfn_nag /src/cloud_formation/
-#    echo "Scan Executed Successfully"
-#  displayName: 'Cloudformation Scan'
+- script: |
+    echo "Initiating Terrascan"
+    docker run -v "$(pwd):/src" accurics/terrascan -l /src/terraform_scripts
+    echo "Scan Executed Successfully"
+  displayName: 'Terrascan'
+
+- script: |
+    echo "Initiating Checkov Scan"
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src/terraform_scripts | p2s '#infrastucture-code-scanning'
+    echo "Scan Executed Successfully"
+  displayName: 'Checkov Scan'
+  
+- script: |
+    echo "Initiating tfsec Scan"
+    docker run --rm -v "$(pwd):/src" liamg/tfsec /src/terraform_scripts
+    echo "Scan Executed Successfully"
+  displayName: 'tfsec Scan'
+
+- script: |
+    echo "Initiating Cloudformation Scan"
+    cfn_nag_scan --input-path /cloudformation_scripts/*
+    echo "Scan Executed Successfully"
+  displayName: 'Cloudformation Scan'
+
+- script: |
+    echo "Initiating Cloudformation Docker Scan"
+    docker run -v "$(pwd):/src" -t stelligent/cfn_nag /src/cloudformation_scripts/cfn_insensitive_authentication.json | p2s '#infrastucture-code-scanning'
+    echo "Scan Executed Successfully"
+  displayName: 'Cloudformation docker Scan'
