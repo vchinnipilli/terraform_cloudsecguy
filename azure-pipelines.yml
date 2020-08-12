@@ -25,7 +25,6 @@ steps:
     sudo npm cache clean -f
     sudo npm install -g pipe-to-slack --force
     mv .p2s ~/.p2s 
-    echo "Scan Executed Successfully"
   displayName: 'Setting up'
 
 - script: |
@@ -36,7 +35,7 @@ steps:
 
 - script: |
     echo "Initiating Checkov Scan"
-    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src/terraform_scripts | p2s '#infrastucture-code-scanning'
+    docker run -v "$(pwd):/src" bridgecrew/checkov -d /src/terraform_scripts
     echo "Scan Executed Successfully"
   displayName: 'Checkov Scan'
   
@@ -54,6 +53,6 @@ steps:
 
 - script: |
     echo "Initiating Cloudformation Docker Scan"
-    docker run -v "$(pwd):/src" -t stelligent/cfn_nag /src/cloudformation_scripts/cfn_insensitive_authentication.json | p2s '#infrastucture-code-scanning'
+    docker run -v "$(pwd):/src" -t stelligent/cfn_nag /src/cloudformation_scripts/cfn_insensitive_authentication.json
     echo "Scan Executed Successfully"
   displayName: 'Cloudformation docker Scan'
